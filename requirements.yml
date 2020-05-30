@@ -1,0 +1,4 @@
+---
+  - name: geerlingguy.docker
+  - name: bertvv.samba
+  - name: geerlingguy.nfs
