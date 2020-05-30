@@ -1,0 +1,12 @@
+*.log
+*.orig
+*.pyc
+*.retry
+*.swp
+*_trash*
+.vagrant
+.venv
+.vscode
+roles/bertvv*
+roles/geerlingguy*
+setup.retry
