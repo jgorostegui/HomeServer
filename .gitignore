@@ -7,6 +7,7 @@
 .vagrant
 .venv
 .vscode
+group_vars/config.yml
 roles/bertvv*
 roles/geerlingguy*
 setup.retry
