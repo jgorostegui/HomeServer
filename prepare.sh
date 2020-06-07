@@ -16,5 +16,5 @@ fi
 echo ""
 echo "To install HomeNAS run with:"
 echo "  ansible-galaxy install -r requirements.yml"
-echo "  ansible-playbook install.yml -K -b"
+echo "  ansible-playbook -i inventory install.yml -K -b"
 echo ""
