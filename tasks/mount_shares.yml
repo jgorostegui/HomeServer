@@ -27,11 +27,3 @@
     src: "//{{ samba_mounts_remote_ip }}/{{ item }}"
     path: "/mnt/homenas_{{ item }}"
   become: true
-
-# file_mode=0777,dir_mode=0777,
-# - name: Mount product image folder share
-#   shell: |
-#     mount "/mnt/homenas_{{ item }}"
-#   become: true
-
-
