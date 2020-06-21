@@ -1,0 +1,37 @@
+---
+- name: Check environment variables exists
+  fail: msg="Bailing out. this play requires 'SMB_PASSWORD'"
+  when: "'SMB_PASSWORD' in ansible_env"
+
+- name: Create credential file (used for fstab entry)
+  copy:
+    content: |
+      username={{ lookup('env','SMB_USER') }}
+      password={{ lookup('env','SMB_PASSWORD') }}
+    dest: "{{ ansible_env.HOME }}/.smbcredentials"
+    mode: "0600"
+    force: no
+  become: true
+#  become_user: myusername
+
+- name: Creates directory
+  file:
+    path: "/mnt/homenas_{{ item }}"
+    state: directory
+
+- name: Create fstab entry for product image folder share
+  mount:
+    state: mounted
+    fstype: cifs
+    opts: "credentials={{ ansible_env.HOME }}/.smbcredentials,vers=3.0,uid=homenas,gid=homenas,iocharset=utf8,file_mode=0777,dir_mode=0770,sec=ntlmv2"
+    src: "//{{ samba_mounts_remote_ip }}/{{ item }}"
+    path: "/mnt/homenas_{{ item }}"
+  become: true
+
+# file_mode=0777,dir_mode=0777,
+# - name: Mount product image folder share
+#   shell: |
+#     mount "/mnt/homenas_{{ item }}"
+#   become: true
+
+
