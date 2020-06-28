@@ -15,14 +15,14 @@
 
 - name: Creates directory
   file:
-    path: "/mnt/homenas_{{ item }}"
+    path: "/mnt/homeserver_{{ item }}"
     state: directory
 
 - name: Create fstab entry for product image folder share
   mount:
     state: mounted
     fstype: cifs
-    opts: "credentials={{ ansible_env.HOME }}/.smbcredentials,vers=3.0,uid=homenas,gid=homenas,iocharset=utf8,file_mode=0777,dir_mode=0770,sec=ntlmv2"
+    opts: "credentials={{ ansible_env.HOME }}/.smbcredentials,vers=3.0,uid=homeserver,gid=homeserver,iocharset=utf8,file_mode=0777,dir_mode=0770,sec=ntlmv2"
     src: "//{{ samba_mounts_remote_ip }}/{{ item }}"
-    path: "/mnt/homenas_{{ item }}"
+    path: "/mnt/homeserver_{{ item }}"
   become: true

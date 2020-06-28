@@ -3,16 +3,16 @@
   file:
     path: "{{ root_folder }}/codeserver"
     state: directory
-    owner: homenas
-    group: homenas
+    owner: homeserver
+    group: homeserver
 
 - name: Get UID
-  command: id -u homenas
+  command: id -u homeserver
   register: uid_output
   become: false
 
 - name: Get GID
-  command: id -g homenas
+  command: id -g homeserver
   register: gid_output
   become: false
 

@@ -14,7 +14,7 @@ fi
 #####################################
 # Display real installation process #
 echo ""
-echo "To install HomeNAS run with:"
+echo "To install HomeServer run with:"
 echo "  ansible-galaxy install -r requirements.yml"
 echo "  ansible-playbook -i inventory install.yml -K -b"
 echo ""
