@@ -1,0 +1,33 @@
+---
+- name: Create VS Code code-server Directories
+  file:
+    path: "{{ root_folder }}/codeserver"
+    state: directory
+    owner: homenas
+    group: homenas
+
+- name: Get UID
+  command: id -u homenas
+  register: uid_output
+  become: false
+
+- name: Get GID
+  command: id -g homenas
+  register: gid_output
+  become: false
+
+# From: https://hub.docker.com/r/linuxserver/code-server
+- name: Create VS Code code-server container
+  docker_container:
+    name: code-server
+    image:   linuxserver/code-server:latest
+    pull: true
+    volumes:
+      - "{{ root_folder }}/codeserver/config:/config"
+    env:
+      PUID: "{{ uid_output.stdout }}"
+      PGID: "{{ gid_output.stdout }}"
+    ports:
+      - "{{ codeserver_port_http }}:8443"
+    restart_policy: unless-stopped
+    memory: 1g
