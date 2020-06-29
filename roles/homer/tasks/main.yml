@@ -1,0 +1,30 @@
+- name: Create homer Directories
+  file:
+    path: "{{ root_folder }}/homer"
+    state: directory
+    owner: homeserver
+    group: homeserver
+
+# /your/local/config.yml:/www/config.yml
+# -v /your/local/assets/:/www/assets
+# https://github.com/bastienwirtz/homer
+- name: Create homer container
+  docker_container:
+    name: homer
+    image: b4bz/homer:latest
+    pull: true
+    volumes: 
+      - "{{ root_folder }}/homer/www/assets:/www/assets:rw"
+    env:
+      PUID: "{{ uid_output.stdout }}"
+      PGID: "{{ gid_output.stdout }}"
+      TZ: "{{ config_timezone }}"
+    ports:
+      - "{{ homer_port_http }}:8080"
+    restart_policy: unless-stopped
+    memory: 1g
+
+- name: Copy homer template file to into place
+  template:
+    src: config.yml.j2
+    dest: "{{ root_folder }}/homer/www/assets/config.yml"
